@@ -6,9 +6,21 @@ import RideSharing.Models.Rider;
 
 public class RiderManager { 
     private HashMap<Integer, Rider> riderMapping;
+    private static RiderManager instance;
 
-    public RiderManager() {
+    private RiderManager() {
         riderMapping = new HashMap<>();
+    }
+
+    public static RiderManager getInstance() {
+        if (instance == null) {
+            synchronized (RiderManager.class) {
+                if (instance == null) {
+                    instance = new RiderManager();
+                }
+            }
+        }
+        return instance;
     }
 
     public void addRider(Rider rider) {

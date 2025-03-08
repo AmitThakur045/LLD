@@ -9,20 +9,21 @@ import RideSharing.Observer.Observe;
 public class Driver extends User implements DriverActions, Observe{
     private static int driverCount = 0;
     private DriverStatus driverStatus;
-    private RideManager rideManager;
+    private final RideManager rideManager;
 
     public Driver(String username) {
         super(driverCount, username);
         Driver.driverCount += 1;
-        rideManager = new RideManager();
+        rideManager = RideManager.getInstance();
         driverStatus = DriverStatus.AVAILABLE;
     }
 
     @Override
     public void markRideCompleted(Ride ride) {
         rideManager.updateRideStatus(ride, RideStatus.COMPLETED);
-        this.addRiderRating(null, driverCount);
-        driverStatus = DriverStatus.AVAILABLE;
+        this.addRiderRating(ride, driverCount);
+        this.setDriverStatus(DriverStatus.AVAILABLE);
+        System.out.println(this.getUsername() + " marked Ride " + ride.getRideId() + " Completed");
     }
 
     @Override
@@ -34,6 +35,10 @@ public class Driver extends User implements DriverActions, Observe{
         return this.driverStatus;
     }
 
+    public void setDriverStatus(DriverStatus driverStatus) {
+        this.driverStatus = driverStatus;
+    }
+
     @Override
     public void notify(String message) {
         System.out.println(message);
@@ -42,11 +47,12 @@ public class Driver extends User implements DriverActions, Observe{
     @Override
     public void markReachedPickupLocation(Ride ride) {
         rideManager.updateRideStatus(ride, RideStatus.REACHED);
-        driverStatus = DriverStatus.BUSY;
+        System.out.println("Driver " + ride.getDriver().getUsername() + " marked Ride" + ride.getRideId() + " Reachded pickup Location");
     }
 
     @Override
     public void markRideStarted(Ride ride) {
         rideManager.updateRideStatus(ride, RideStatus.START);
+        System.out.println("Driver " + ride.getDriver().getUsername() + " Started the Ride " + ride.getRideId());
     }
 }

@@ -10,11 +10,11 @@ import RideSharing.Models.Rider;
 
 public class Main {
     public static void main(String[] args) {
-        // write test cases here to check the implementation of ride sharing system
+        // write test cases here to check the implementation of ride-sharing system
 
-        RideManager rideManager = new RideManager();
-        DriverManager driverManager = new DriverManager();
-        RiderManager riderManager = new RiderManager();
+        RideManager rideManager = RideManager.getInstance();
+        DriverManager driverManager = DriverManager.getInstance();
+        RiderManager riderManager = RiderManager.getInstance();
 
         Location start = new Location(0, 0);
         Location end = new Location(10, 10);
@@ -28,21 +28,38 @@ public class Main {
 
         Driver driver1 = new Driver("driver1");
         Driver driver2 = new Driver("driver2");
+        Driver driver3 = new Driver("driver3");
 
         driverManager.addDriver(driver1);
         driverManager.addDriver(driver2);
-        
-        Ride ride1 = rideManager.createNewRide(rider2, start, end);
-        Ride ride2 = rideManager.createNewRide(rider1, start, end2);
-        
+
+        Ride ride1 = rider1.bookRide(start, end);
+        driverManager.addDriver(driver3);
+
+        Ride ride2 = rider2.bookRide(start, end2);
+
+        driverManager.printAllDriver();
+
         Driver driverMappedWithRide1 = ride1.getDriver();
         Driver driverMappedWithRide2 = ride2.getDriver();
-        
+
+        rideManager.printRide(ride1);
+        rideManager.printRide(ride2);
+        driverManager.printAllDriver();
+
         driverMappedWithRide1.markReachedPickupLocation(ride1);
         driverMappedWithRide1.markRideStarted(ride1);
 
+        rideManager.printRide(ride1);
+        rideManager.printRide(ride2);
+        driverManager.printAllDriver();
+
         driverMappedWithRide2.markReachedPickupLocation(ride2);
         driverMappedWithRide1.markRideCompleted(ride1);
+
+        rideManager.printRide(ride1);
+        rideManager.printRide(ride2);
+        driverManager.printAllDriver();
 
         driverMappedWithRide2.markRideStarted(ride2);
         driverMappedWithRide2.markRideCompleted(ride2);
