@@ -1,0 +1,53 @@
+Entity
+- User
+- Contact
+- Global
+
+
+Managers:
+- PhoneManager
+
+User:
+- Integer id
+- String Name
+- String phoneNumber
+- List<Contact> contactList
+- List<Contact> favouriteList
+- List<Contact> blockedList
+
+Global:
+- Map<String, Integer> spamMap
+
+Contact:
+- Integer id
+- String Name
+- String phoneNumber
+
+PhoneManager:
+- Map<String, User> userMap
+- Map<String, Contact> contactMap
+- Map<String, Trie> namesList
+- Map<String, Trie> numberList
+	
+
+Actions
+PhoneManagerActions:
+- CreateUser(User user) -> void
+- CreateContact(User user, Contact contact) -> void
+- MarkContactAsSpam(User user, Contact contact) -> void
+- AddToFavourite(User user, Contact contact) -> void
+- AddToBlockedList(User user, Contact contact) -> void
+
+
+TrieNode:
+- Map<Character, TrieNode> children
+- Boolean isEndofWord
+
+Trie:
+- TrieNode trieNode
+
+- insert(String word) -> void
+- search(word) -> List<String>
+
+
+

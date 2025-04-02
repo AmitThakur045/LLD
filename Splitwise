@@ -1,0 +1,44 @@
+Entity:
+- User
+- Expense
+- Group
+- SplitManager
+- UserBalance
+
+User:
+- Integer id
+- String name
+- Map<User, Double> balanceSheet
+
+Group:
+- Integer Id
+- String name
+- List<User> members
+- List<Expense> transactions
+- Map<User, Double> balanceSheet
+
+Expense:
+- Integer id
+- String name
+- Double amount
+- User payer
+- List<User> members
+- SplitStrategy splitStrategy
+
+UserBalance:
+- User user
+- Double amount
+
+Actions:
+SplitManagerActions:
+ - minimizeTransactions(Map<User, Double> balanceSheet)
+ 
+GroupActions:
+ - AddUser(User user)
+ - RemoveUser(User user)
+ - AddExpence(Expense expense)
+ 
+ExpenseActions
+ - split(List<User> members) -> Map(User, Double)
+ 
+

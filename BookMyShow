@@ -1,0 +1,90 @@
+User Actions:
+- searchMovies(String searchString) -> List<Movies>
+- bookSeats(List<Seats> seats, Show show) -> Booking
+- cancelBooking(Booking booking) -> Boolean
+
+
+Admin Actions:
+- createTheater(name, location, nofScreen) -> Theater
+- createShow(Theater theater) -> Show 
+- createSeat(Show show) -> Seat
+
+
+Entity:
+- User
+  - id
+  - name
+  - List<Booking> bookingHistory
+
+- Event:
+  - id
+  - name
+  - EventType eventType 
+  - Number durationInSeconds
+  
+- MovieEvent(Event):
+  - String genre
+  - DateTime releaseDate  
+  - List<String> actors
+ 
+- ConcertEvent(Event):
+  - List<String> musicians
+
+- StandupEvent(Event):
+  - String comidian 
+
+
+- Show:
+  - id
+  - Event event
+  - DateTime startDateTime
+  - DateTime endDateTime
+  - List<Seats> seats
+
+- Seat:
+  - id
+  - isBooked
+  - Show mappedShow
+  - Number seatNumber
+  - Number rowNumber
+
+- Theater:
+  - id
+  - name
+  - Location
+  - List<Show> shows  
+
+- Booking:
+  - id
+  - bookingDateTime
+  - bookingStatus
+  - Show mappedShow
+  - List<Seat> bookedSeats
+  - User user
+
+
+ENUMS:
+EventType: [MOVIE, CONCERT, STANDUP, SHOW]
+
+
+Managers:
+ShowManagers:
+- addTheater(Theater theater)
+- AddEvent(Theater theater, Event event)
+- checkIfShowExist(String showId)
+- checkIfSeatExist(String seatId)
+- AddShow(Event event, Show show)
+- AddSeat(Event event, Seat seat)
+
+
+BookingManager:
+- createBooking(Theater theater, Show show, List<Seat> seatsToBeBooked) -> List<Seats>
+
+
+
+
+
+
+
+
+
